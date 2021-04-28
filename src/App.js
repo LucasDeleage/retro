@@ -26,9 +26,6 @@ let theme = createMuiTheme({
 });
 
 
-
-
-
 theme = responsiveFontSizes(theme);
 
 function App() {
@@ -38,7 +35,6 @@ function App() {
   const [email, setEmail] = useState()
   const [mdp, setMdp] = useState()
   const [error, setError] = useState('')
-  const [dark, setDark] = useState(false)
   const db = firebase.firestore(); //init bdd 
  
   const signInWithGoogle = async () => {

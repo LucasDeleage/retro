@@ -13,6 +13,7 @@ import ArrowLeftIcon from "@material-ui/icons/ArrowLeft";
 import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 import SwitchChannel from "./SwitchChannel";
 import { Fragment } from "react";
+import SimpleBackdrop from "./BackdropMessage";
 var currentWeekNumber = require("current-week-number");
 
 const useStyles = makeStyles((theme) => ({
@@ -100,7 +101,7 @@ export default function ChatRoom(props) {
       </Grid>
       <Grid style={{ overflowY: "scroll", flexGrow: 1 }}>
         {wait ? (
-          <CircularProgress />
+          <SimpleBackdrop />
         ) : (
           messages.map((message) => (
             <Fragment key={message.data.date}>
