@@ -18,9 +18,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import RateReviewIcon from "@material-ui/icons/RateReview";
 import SettingsApplicationsIcon from "@material-ui/icons/SettingsApplications";
-import ChatRoom from "./ChatRoom";
-import Parametres from "./Parametres";
-import Profil from "./Profil";
 import { Button, Grid } from "@material-ui/core";
 
 const drawerWidth = 240;
@@ -97,15 +94,25 @@ export default function Navbar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("Retrospective");
+  const { signOut, setActive, children } = props;
+  const {
+    root,
+    appBarShift,
+    appBar,
+    menuButton,
+    hide,
+    drawerOpen,
+    drawer,
+    drawerClose,
+    toolbar,
+    content,
+  } = classes;
 
   const items = [
     ["Profil", <AccountBoxIcon />],
     ["Retrospective", <RateReviewIcon />],
     ["Paramètres", <SettingsApplicationsIcon />],
   ];
-
-  const { signOut, db, user } = props;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -116,23 +123,23 @@ export default function Navbar(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={root}>
       <CssBaseline />
       <AppBar
         position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+        className={clsx(appBar, {
+          [appBarShift]: open,
         })}
       >
-        <Toolbar className={classes.toolbar}>
+        <Toolbar>
           <Grid container alignItems="center">
             <IconButton
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: open,
+              className={clsx(menuButton, {
+                [hide]: open,
               })}
             >
               <MenuIcon />
@@ -150,18 +157,18 @@ export default function Navbar(props) {
       </AppBar>
       <Drawer
         variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
+        className={clsx(drawer, {
+          [drawerOpen]: open,
+          [drawerClose]: !open,
         })}
         classes={{
           paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
+            [drawerOpen]: open,
+            [drawerClose]: !open,
           }),
         }}
       >
-        <div className={classes.toolbar}>
+        <div className={toolbar}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -188,18 +195,7 @@ export default function Navbar(props) {
         </List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
-        {(() => {
-          switch (active) {
-            case "Retrospective":
-              return <ChatRoom db={db} user={user} />;
-            case "Profil":
-              return <Profil />;
-            case "Paramètres":
-              return <Parametres />;
-          }
-        })()}
-      </main>
+      <main className={content}>{children}</main>
     </div>
   );
 }

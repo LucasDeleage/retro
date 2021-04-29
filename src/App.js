@@ -5,6 +5,9 @@ import Navbar from './components/Navbar'
 import firebase from './firebase.config'
 import 'firebase/auth';
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core';
+import ChatRoom from './components/ChatRoom';
+import Profil from './components/Profil';
+import Parametres from './components/Parametres';
 
 
 
@@ -36,6 +39,7 @@ function App() {
   const [mdp, setMdp] = useState()
   const [error, setError] = useState('')
   const db = firebase.firestore(); //init bdd 
+  const [active, setActive] = useState("Retrospective");
  
   const signInWithGoogle = async () => {
     //Connexion avec google
@@ -109,12 +113,23 @@ function App() {
     }; 
   
 
-
-
   return (
     <ThemeProvider theme={theme}>
     <div className="App">
-      {user? <Navbar  signOut={signOut} db={db} user={user}/> : <Login loginUser={loginUser} signInWithGoogle = {signInWithGoogle} setEmail ={setEmail} setMdp ={setMdp} createAccount={createAccount} error={error}/>}     
+      {user? 
+      <Navbar  signOut={signOut} db={db} user={user} setActive={setActive}>
+        {(() => {
+          switch (active) {
+            case "Retrospective":
+              return <ChatRoom db={db} user={user}/>;
+            case "Profil":
+              return <Profil />;
+            case "Paramètres":
+              return <Parametres />;
+          }
+        })()}
+      </Navbar> 
+      : <Login loginUser={loginUser} signInWithGoogle = {signInWithGoogle} setEmail ={setEmail} setMdp ={setMdp} createAccount={createAccount} error={error}/>}     
     </div>
     </ThemeProvider>
   );

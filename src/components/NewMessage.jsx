@@ -31,7 +31,10 @@ export default function NewMessage(props) {
     const input = document.querySelector("#filled-secondary");
     input.value = "";
     console.log(e.target.value);
-    if (db) {
+
+    if (!message) {
+    }
+    if (db && message) {
       db.collection(channelLike ? "Like" : "Dislike").add({
         content: message,
         date: firebase.firestore.FieldValue.serverTimestamp(),

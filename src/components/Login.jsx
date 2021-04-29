@@ -1,5 +1,4 @@
 import {
-  Container,
   Grid,
   FormControl,
   TextField,
@@ -8,7 +7,6 @@ import {
   Typography,
   Box,
 } from "@material-ui/core";
-import { FormatListBulletedOutlined } from "@material-ui/icons";
 import EventAvailableTwoToneIcon from "@material-ui/icons/EventAvailableTwoTone";
 import React, { useEffect, useState } from "react";
 import Logo from "../images/Chat_SVG.svg";
